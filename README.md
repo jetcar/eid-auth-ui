@@ -68,3 +68,44 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Frontend
+
+This is the React frontend for the OIDC authentication system.
+
+## Features
+
+- Tabbed login UI for IdCard, Mobile-ID, and Smart-ID
+- Communicates with backend via REST API
+- Polling for authentication status
+- State synchronization between tabs
+- Uses `@web-eid/web-eid-library` for eID authentication
+
+## Structure
+
+- `src/App.js` - Main app and tab logic
+- `src/controls/` - Tab components for each authentication method
+- `src/api.js` - API utility for backend communication
+- `src/utils/` - Utility functions (OIDC param helpers, etc.)
+
+## Development
+
+```sh
+cd frontend
+npm install
+npm start
+```
+
+- The frontend runs on port 3000 and proxies API requests to the backend (`https://localhost:8443`).
+
+## Testing
+
+```sh
+npm test
+```
+
+## Notes
+
+- Requires Node.js 18+ and npm
+- See `package.json` for dependencies
+- OIDC parameters are passed via URL and appended to API requests
