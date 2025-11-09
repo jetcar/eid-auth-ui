@@ -1,8 +1,7 @@
 import React from 'react';
-import { handleWebEidLogin } from '../App';
 
 export default function IdCardTab(props) {
-  const { handleIdCardReturn } = props;
+  const { handleIdCardReturn, handleWebEidLogin } = props;
 
   return (
     <div>
