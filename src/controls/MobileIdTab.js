@@ -22,6 +22,9 @@ export default function MobileIdTab(props) {
   } = props;
 
   const isCancelled = mobileStatus === 'Authentication cancelled';
+  const isError = mobileStatus && mobileStatus.startsWith('Error');
+  const isPolling = mobileCode && !isCancelled && !isError;
+
   const personalCodeRef = useRef(null);
   const phoneNumberRef = useRef(null);
 
@@ -71,61 +74,69 @@ export default function MobileIdTab(props) {
         </div>
       )}
       {mobileStatus && (
-        <div style={{ marginTop: '8px', color: '#1976d2' }}>{mobileStatus}</div>
+        <div style={{ marginTop: '8px', color: isError ? '#d32f2f' : '#1976d2' }}>{mobileStatus}</div>
       )}
-      {!isCancelled && (
-        <form onSubmit={handleSubmit} autoComplete="on">
-          <div className="input-group phoneid-row">
-            <label className="phoneid-label">Personal Code</label>
-            <input
-              type="text"
-              name="personalCode"
-              placeholder="Personal Code"
-              className="input-box"
-              ref={personalCodeRef}
-              value={mobilePersonalCode}
-              onChange={e => setMobilePersonalCode(e.target.value)}
-              style={{ width: '220px' }}
-              autoComplete="personalCode"
-            />
+      <form onSubmit={handleSubmit} autoComplete="on">
+        <div className="input-group phoneid-row">
+          <label className="phoneid-label">Personal Code</label>
+          <input
+            type="text"
+            name="personalCode"
+            placeholder="Personal Code"
+            className="input-box"
+            ref={personalCodeRef}
+            value={mobilePersonalCode}
+            onChange={e => setMobilePersonalCode(e.target.value)}
+            style={{ width: '220px' }}
+            autoComplete="personalCode"
+            disabled={isPolling}
+          />
+        </div>
+        <div className="input-group phoneid-row">
+          <label className="phoneid-label">Phone Number</label>
+          <div className="country-dropdown-wrapper">
+            <select
+              name="countryCode"
+              value={COUNTRY_LIST.find(c => c.name === mobileCountry)?.code || COUNTRY_LIST[0].code}
+              onChange={handleCountryCodeChange}
+              className="country-dropdown"
+              disabled={isPolling}
+            >
+              {COUNTRY_LIST.map(country => (
+                <option key={country.code} value={country.code}>{country.code}</option>
+              ))}
+            </select>
           </div>
-          <div className="input-group phoneid-row">
-            <label className="phoneid-label">Phone Number</label>
-            <div className="country-dropdown-wrapper">
-              <select
-                name="countryCode"
-                value={COUNTRY_LIST.find(c => c.name === mobileCountry)?.code || COUNTRY_LIST[0].code}
-                onChange={handleCountryCodeChange}
-                className="country-dropdown"
-              >
-                {COUNTRY_LIST.map(country => (
-                  <option key={country.code} value={country.code}>{country.code}</option>
-                ))}
-              </select>
-            </div>
-            <input
-              type="text"
-              name="mobilePhoneNumber"
-              placeholder="Phone Number"
-              className="input-box mobile-phonenumber-input"
-              ref={phoneNumberRef}
-              value={mobilePhoneNumber}
-              onChange={handlePhoneNumberChange}
-              autoComplete="tel"
-            />
-          </div>
-          <button className="cancel-btn" type="button" onClick={handleMobileCancel}>Cancel</button>
-          <button className="continue-btn" type="submit">Continue</button>
-        </form>
-      )}
-      {isCancelled && (
+          <input
+            type="text"
+            name="mobilePhoneNumber"
+            placeholder="Phone Number"
+            className="input-box mobile-phonenumber-input"
+            ref={phoneNumberRef}
+            value={mobilePhoneNumber}
+            onChange={handlePhoneNumberChange}
+            autoComplete="tel"
+            disabled={isPolling}
+          />
+        </div>
         <button
           className="continue-btn return-btn"
+          type="button"
           onClick={handleMobileReturn}
         >
           Return
         </button>
-      )}
+        {isPolling && (
+          <button className="cancel-btn" type="button" onClick={handleMobileCancel}>
+            Cancel
+          </button>
+        )}
+        {!isPolling && (
+          <button className="continue-btn" type="submit">
+            Continue
+          </button>
+        )}
+      </form>
     </div>
   );
 }

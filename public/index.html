@@ -3,6 +3,15 @@
 
 <head>
   <meta charset="utf-8" />
+  <script>
+    // Set base dynamically based on current page URL
+    const base = document.createElement('base');
+    const currentPath = window.location.pathname;
+    // Extract base path (everything before the last segment)
+    const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+    base.href = basePath;
+    document.head.appendChild(base);
+  </script>
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />

@@ -3,32 +3,36 @@ import { appendOidcParamsToUrl } from './utils/oidcParams';
 
 export async function startMobileId({ personalCode, phoneNumber, countryCode }) {
   const params = new URLSearchParams({ personalCode, phoneNumber, countryCode });
-  const url = appendOidcParamsToUrl(`/mobileid/start?${params.toString()}`);
+  const url = appendOidcParamsToUrl(`mobileid/start?${params.toString()}`);
   const res = await fetch(url, { method: 'POST' });
+  if (!res.ok) throw new Error(`POST /mobileid/start server error: ${res.status}`);
   return res.json();
 }
 
 export async function checkMobileId(sessionId) {
-  const url = appendOidcParamsToUrl(`/mobileid/check?sessionId=${sessionId}`);
+  const url = appendOidcParamsToUrl(`mobileid/check?sessionId=${sessionId}`);
   const res = await fetch(url);
+  if (!res.ok) throw new Error(`GET /mobileid/check server error: ${res.status}`);
   return res.json();
 }
 
 export async function startSmartId({ country, personalCode }) {
   const params = new URLSearchParams({ country, personalCode });
-  const url = appendOidcParamsToUrl(`/smartid/start?${params.toString()}`);
+  const url = appendOidcParamsToUrl(`smartid/start?${params.toString()}`);
   const res = await fetch(url, { method: 'POST' });
+  if (!res.ok) throw new Error(`POST /smartid/start server error: ${res.status}`);
   return res.json();
 }
 
 export async function checkSmartId(sessionId) {
-  const url = appendOidcParamsToUrl(`/smartid/check?sessionId=${sessionId}`);
+  const url = appendOidcParamsToUrl(`smartid/check?sessionId=${sessionId}`);
   const res = await fetch(url);
+  if (!res.ok) throw new Error(`GET /smartid/check server error: ${res.status}`);
   return res.json();
 }
 
 export async function getWebEidChallenge() {
-  const url = appendOidcParamsToUrl("/idlogin/challenge");
+  const url = appendOidcParamsToUrl("idlogin/challenge");
   const resp = await fetch(url, {
     method: "GET",
     headers: { "Content-Type": "application/json" }
@@ -39,7 +43,7 @@ export async function getWebEidChallenge() {
 }
 
 export async function sendWebEidAuthToken(authToken, sessionId) {
-  let url = appendOidcParamsToUrl("/idlogin/login");
+  let url = appendOidcParamsToUrl("idlogin/login");
   if (sessionId) {
     const sep = url.includes('?') ? '&' : '?';
     url += `${sep}sessionId=${encodeURIComponent(sessionId)}`;
