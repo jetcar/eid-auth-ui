@@ -4,7 +4,7 @@ const path = require('path');
 const fse = require('fs-extra');
 
 const buildDir = path.join(__dirname, 'build');
-const targetDir = path.join(__dirname, '..', 'backend', 'src', 'main', 'resources', 'static');
+const targetDir = path.join(__dirname, '..', 'eid-oidc-provider', 'src', 'main', 'resources', 'static');
 
 if (!fs.existsSync(buildDir)) {
   console.error('Build directory does not exist. Run npm run build first.');

@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Estonian eID Authentication UI
+
+React-based user interface for Estonian eID authentication (ID-Card, Mobile-ID, Smart-ID).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
