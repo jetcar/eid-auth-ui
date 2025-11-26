@@ -115,7 +115,7 @@ export default function MobileIdTab(props) {
             ref={phoneNumberRef}
             value={mobilePhoneNumber}
             onChange={handlePhoneNumberChange}
-            autoComplete="tel"
+            autoComplete="tel1"
             disabled={isPolling}
           />
         </div>
