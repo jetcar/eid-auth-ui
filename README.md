@@ -111,3 +111,7 @@ npm test
 - Requires Node.js 18+ and npm
 - See `package.json` for dependencies
 - OIDC parameters are passed via URL and appended to API requests
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
