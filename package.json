@@ -25,7 +25,15 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-unused-vars": [
+        "error",
+        {
+          "varsIgnorePattern": "^(mobileSessionId|smartSessionId)$"
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
